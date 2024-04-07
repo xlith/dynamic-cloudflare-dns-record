@@ -1,0 +1,24 @@
+[Unit]
+Description=Update dns record on cloudflare with the current ip every 5 min
+Wants=update-cloudflare-dns.timer
+
+[Service]
+Type=oneshot
+WorkingDirectory=!working_dir!
+ExecStart=!working_dir!/update-cloudflare-dns.sh
+
+# Secrets
+!cf_zone_id!
+!cf_record_id!
+!cf_auth_email!
+!cf_dns_token!
+!cf_domain!
+Environment=UCF_ZONE_ID=%d/cf_zone_id
+Environment=UCF_RECORD_ID=%d/cf_record_id
+Environment=UCF_AUTH_EMAIL=%d/cf_auth_email
+Environment=UCF_DNS_TOKEN=%d/cf_dns_token
+Environment=UCF_DOMAIN=%d/cf_domain
+Environment=UCF_PWD=!working_dir!
+
+[Install]
+WantedBy=multi-user.target
