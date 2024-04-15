@@ -29,12 +29,12 @@ install() {
     sed 's,!cf_auth_email!,'"$cf_auth_email"',g' |
     sed 's,!cf_dns_token!,'"$cf_dns_token"',g' |
     sed 's,!cf_domain!,'"$cf_domain"',g' > \
-    /etc/systemd/user/update-cloudflare-dns.service
+    /etc/systemd/system/update-cloudflare-dns.service
 
-    cp update-cloudflare-dns.timer /etc/systemd/user/.
+    cp update-cloudflare-dns.timer /etc/systemd/system/.
 
-    systemctl --user daemon-reload
-    systemctl --user start update-cloudflare-dns.service
+    systemctl daemon-reload
+    systemctl start update-cloudflare-dns.service
 }
 
 install
