@@ -18,11 +18,8 @@ update_my_ip() {
   log_file="${UCF_PWD}/${file_name%.*}".log
 
   local last_ip
-  if [[ -f "$log_file" ]]; then
-    last_ip=$(awk 'END{print $1}' "$log_file")
-  else
-    touch "$log_file"
-  fi
+  touch "$log_file"
+  last_ip=$(awk 'END{print $1}' "$log_file")
 
   if [[ "$current_ip" != "$last_ip" ]]; then
       echo "updating dns ip with $current_ip"
