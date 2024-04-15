@@ -23,12 +23,12 @@ install() {
     echo "Insert the Domain:"
     cf_domain=$(systemd-ask-password -n | systemd-creds encrypt --name=cf_domain -p - - )
 
-    sed 's,!working_dir!,'"$working_dir"',g' update-cloudflare-dns.service |
-    sed 's,!cf_zone_id!,'"$cf_zone_id"',g' |
-    sed 's,!cf_record_id!,'"$cf_record_id"',g' |
-    sed 's,!cf_auth_email!,'"$cf_auth_email"',g' |
-    sed 's,!cf_dns_token!,'"$cf_dns_token"',g' |
-    sed 's,!cf_domain!,'"$cf_domain"',g' > \
+    awk -v working_dir="$working_dir" '{sub(/!working_dir!/, working_dir); print}' update-cloudflare-dns.service |
+    awk -v cf_zone_id="$cf_zone_id" '{sub(/!cf_zone_id!/, cf_zone_id); print}' |
+    awk -v cf_record_id="$cf_record_id" '{sub(/!cf_record_id!/, cf_record_id); print}' |
+    awk -v cf_auth_email="$cf_auth_email" '{sub(/!cf_auth_email!/, cf_auth_email); print}' |
+    awk -v cf_dns_token="$cf_dns_token" '{sub(/!cf_dns_token!/, cf_dns_token); print}' |
+    awk -v cf_domain="$cf_domain" '{sub(/!cf_domain!/, cf_domain); print}' > \
     /etc/systemd/system/update-cloudflare-dns.service
 
     cp update-cloudflare-dns.timer /etc/systemd/system/.
