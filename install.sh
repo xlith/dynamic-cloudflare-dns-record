@@ -33,8 +33,8 @@ install() {
 
     cp update-cloudflare-dns.timer /etc/systemd/user/.
 
-    systemctl daemon-reload
-    systemctl start update-cloudflare-dns.service
+    systemctl --user daemon-reload
+    systemctl --user start update-cloudflare-dns.service
 }
 
 install
